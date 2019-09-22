@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TweetHolic</string>
+    <string name="have_to_study">勉強勉強勉強</string>
+    <string name="whats_happening">いまなにしてる？</string>
+    <string name="post">投稿</string>
+    <string name="delete">削除</string>
+    <string name="consumer_setting">コンシューマ設定</string>
+    <string name="ok">OK</string>
+</resources>

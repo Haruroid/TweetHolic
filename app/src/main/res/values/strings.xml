@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TweetHolic</string>
+    <string name="have_to_study">You Have to Study Immediately!!!</string>
+    <string name="whats_happening">What’s Happening?</string>
+    <string name="post">Post!</string>
+    <string name="delete">Delete</string>
+    <string name="consumer_setting">Consumer Setting</string>
+    <string name="ok">OK</string>
+</resources>
