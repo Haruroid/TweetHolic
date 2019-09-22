@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.gson.Gson;
@@ -27,15 +28,27 @@ import com.haruroid.tweetholic.twitter.Profile;
 import java.util.ArrayList;
 import java.util.List;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 public class MainActivity extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
+    private static final int REQUEST_LOGIN = 10;
 
     private RecyclerView rc_images;
     private List<ImagesDataClass> imagelist;
     private ImagesAdapter imgadapter;
     private ImageButton btn_addimage;
+    private Button btn_post;
+    private EditText tx_tweet;
+
+    private SharedPreferences profile;
+    private Gson gson;
+
+    private TwitterFactory factory;
+    private Twitter twitter;
+    private Profile user_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +67,25 @@ public class MainActivity extends AppCompatActivity {
         btn_addimage = findViewById(R.id.btn_addimage);
         btn_addimage.setOnClickListener(addImages);
 
-        SharedPreferences profile = getSharedPreferences("Profile", Context.MODE_PRIVATE);
-        String profile_json = profile.getString("Tokens","");
-        if(profile_json.equals("")){
-            //ログイン
-        }
-        Gson gson = new Gson();
-        Profile user_profile = gson.fromJson(profile_json,Profile.class);
+        btn_post = findViewById(R.id.btn_post);
+        btn_post.setOnClickListener(post);
+
+        tx_tweet = findViewById(R.id.tx_tweet);
+
+        profile = getSharedPreferences("Profile", Context.MODE_PRIVATE);
+        String profile_json = profile.getString("profile","{}");
+        gson = new Gson();
+        user_profile = gson.fromJson(profile_json,Profile.class);
+        factory = new TwitterFactory();
         if(user_profile.accessToken == null) {
-            //ログイン
+            Intent intent = new Intent(this, LoginActivity.class);
+            this.startActivityForResult(intent,REQUEST_LOGIN);
+        }else{
+            twitter = factory.getInstance();
+            twitter.setOAuthConsumer(user_profile.oauth_consumer_key,user_profile.oauth_consumer_secret);
+            twitter.setOAuthAccessToken(user_profile.accessToken);
         }
+
     }
 
     View.OnClickListener addImages = new View.OnClickListener() {
@@ -75,6 +97,19 @@ public class MainActivity extends AppCompatActivity {
             intent.setType("image/*");
             startActivityForResult(intent, READ_REQUEST_CODE);
 
+        }
+    };
+
+    View.OnClickListener post = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(twitter != null && !tx_tweet.getText().toString().equals("")){
+                try {
+                    twitter.updateStatus(tx_tweet.getText().toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     };
 
@@ -96,6 +131,17 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }
+
+        if (requestCode == REQUEST_LOGIN && resultCode == Activity.RESULT_OK) {
+            if(resultData != null){
+                profile.edit().putString("profile",resultData.getStringExtra("prof_json")).apply();
+                user_profile = gson.fromJson(resultData.getExtras().getString("prof_json"),Profile.class);
+                twitter = factory.getInstance();
+                twitter.setOAuthConsumer(user_profile.oauth_consumer_key,user_profile.oauth_consumer_secret);
+                twitter.setOAuthAccessToken(user_profile.accessToken);
+            }
+
         }
     }
 }

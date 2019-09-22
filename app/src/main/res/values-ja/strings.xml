@@ -7,4 +7,7 @@
     <string name="delete">削除</string>
     <string name="consumer_setting">コンシューマ設定</string>
     <string name="ok">OK</string>
+    <string name="consumer_key">コンシューマキー</string>
+    <string name="consumer_secret">コンシューマシークレット</string>
+    <string name="input_pin">PINを入力</string>
 </resources>

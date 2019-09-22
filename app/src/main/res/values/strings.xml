@@ -6,4 +6,7 @@
     <string name="delete">Delete</string>
     <string name="consumer_setting">Consumer Setting</string>
     <string name="ok">OK</string>
+    <string name="consumer_secret">Consumer Secret</string>
+    <string name="consumer_key">Consumer Key</string>
+    <string name="input_pin">Input PIN</string>
 </resources>
