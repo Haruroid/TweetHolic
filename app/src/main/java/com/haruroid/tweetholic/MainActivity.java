@@ -1,19 +1,10 @@
 package com.haruroid.tweetholic;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,23 +15,24 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import com.google.gson.Gson;
 import com.haruroid.tweetholic.recycler.images.ImagesAdapter;
 import com.haruroid.tweetholic.recycler.images.ImagesDataClass;
 import com.haruroid.tweetholic.twitter.Profile;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.UploadedMedia;
-import twitter4j.auth.AccessToken;
 
 public class MainActivity extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
@@ -198,27 +190,5 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-    }
-
-    //https://www.magata.net/memo/index.php?file%A5%B9%A5%AD%A1%BC%A5%E0%A4%CEURI%A4%CB%CA%D1%B4%B9%A4%B9%A4%EB%28Android%29
-    private String getPath(Uri uri) {
-        String path = uri.toString();
-        if (path.matches("^file:.*")) {
-            return path.replaceFirst("file://", "");
-        } else if (!path.matches("^content:.*")) {
-            return path;
-        }
-        Context context = getApplicationContext();
-        ContentResolver contentResolver = context.getContentResolver();
-        String[] columns = { MediaStore.Images.Media.DATA };
-        Cursor cursor = contentResolver.query(uri, columns, null, null, null);
-        if (cursor != null){
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                path = cursor.getString(0);
-            }
-            cursor.close();
-        }
-        return path;
     }
 }
