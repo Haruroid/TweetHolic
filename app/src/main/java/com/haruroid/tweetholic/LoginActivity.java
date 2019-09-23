@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent result = new Intent();
                             Bundle data = new Bundle();
                             data.putString("prof_json", prof_json);
+                            result.putExtras(data);
                             setResult(RESULT_OK, result);
                             finish();
                         }

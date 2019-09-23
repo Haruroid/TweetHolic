@@ -10,4 +10,6 @@
     <string name="consumer_key">コンシューマキー</string>
     <string name="consumer_secret">コンシューマシークレット</string>
     <string name="input_pin">PINを入力</string>
+    <string name="tweeted">投稿しました</string>
+    <string name="failed_to_tweet">ツイート失敗</string>
 </resources>

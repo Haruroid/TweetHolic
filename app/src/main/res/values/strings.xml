@@ -9,4 +9,6 @@
     <string name="consumer_secret">Consumer Secret</string>
     <string name="consumer_key">Consumer Key</string>
     <string name="input_pin">Input PIN</string>
+    <string name="tweeted">Tweeted!</string>
+    <string name="failed_to_tweet">Failed to tweet</string>
 </resources>
